@@ -5,7 +5,6 @@ exports.connectDb = async () => {
     try {
         const connection = await mongoose.connect(connectionURL);
         console.log('Database connected successsfully');
-        return connection;
 
     } catch (error) {
         console.log(error);
@@ -18,6 +17,18 @@ exports.runServer = async () => {
         const port = process.env.PORT || 3000;
         await app.listen(port)
         console.log(`Server Listening on port ${port}`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+exports.seedModel = async (model, data) => {
+    try {
+        await exports.connectDb();
+        await model.deleteMany({});
+        await model.create(data);
+        mongoose.connection.close();
+        console.log('Data seeded successfully');
     } catch (error) {
         console.log(error);
     }

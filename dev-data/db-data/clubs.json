@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Rotaract",
+        "logo": "roto.jpg"
+    },
+    {
+        "name": "IE",
+        "logo": "ie.jpg"
+    },
+    {
+        "name": "IEEE",
+        "logo": "ieee.png"
+    },
+    {
+        "name": "ISTE",
+        "logo": "iste.png"
+    },
+    {
+        "name": "IET",
+        "logo": "iet.jpg"
+    },
+    {
+        "name": "ACM",
+        "logo": "acm.jpg"
+    }
+]
