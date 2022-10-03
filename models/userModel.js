@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const clubModel = require('./clubModel');
 
 const userSchema = new mongoose.Schema({
@@ -19,6 +20,7 @@ const userSchema = new mongoose.Schema({
     },
     club: {
         type: String,
+        required: [true, "club name missing"],
         //custom validator
         validate: {
             validator: async function (inputClub) {
@@ -43,5 +45,11 @@ userSchema.pre('save', async function () {
         return console.log(err);
     }
 })
+
+userSchema.methods.signJWT = function () {
+    return jwt.sign({ id: this._id }, process.env.SECRET, {
+        expiresIn: Math.floor(Date.now() / 1000 + 30 * 24 * 60 * 60) //30 days
+    });
+};
 
 module.exports = mongoose.model('User', userSchema)
