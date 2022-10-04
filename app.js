@@ -8,7 +8,7 @@ app.use(json())
 app.use('/api/v1/auth', authRoutes);
 app.use((err, req, res, next) => {
     console.log(err);
-    res.status(400).json({
+    res.status(err.statusCode).json({
         status: "fail",
         message: err.message
     })
