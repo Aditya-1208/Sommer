@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt')
 const clubModel = require('./clubModel');
 
 const userSchema = new mongoose.Schema({
@@ -32,16 +33,21 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'password is missing']
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now()
     }
 })
 
-userSchema.pre('save', async function () {
+userSchema.pre('save', async function (next) {
     try {
         this.password = await bcrypt.hash(this.password, 10);
     }
     catch (err) {
         return console.log(err);
     }
+    next()
 })
 
 module.exports = mongoose.model('User', userSchema)
