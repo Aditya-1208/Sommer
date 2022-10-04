@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const slugify = require('slugify')
 const subtaskSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -36,6 +36,11 @@ const subtaskSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     }
+})
+
+subtaskSchema.pre('save', function (next) {
+    this.slug = slugify(this.title);
+    next();
 })
 
 module.exports = mongoose.model('Subtask', subtaskSchema);

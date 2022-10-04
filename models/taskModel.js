@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 const clubModel = require(`${__dirname}/clubModel.js`)
 
 const taskSchema = new mongoose.Schema({
@@ -46,6 +47,11 @@ const taskSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     }
+})
+
+taskSchema.pre('save', function (next) {
+    this.slug = slugify(this.title);
+    next();
 })
 
 module.exports = mongoose.model('Task', taskSchema);
