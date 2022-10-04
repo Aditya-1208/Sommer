@@ -50,7 +50,7 @@ const taskSchema = new mongoose.Schema({
 })
 
 taskSchema.pre('save', function (next) {
-    this.slug = slugify(this.title);
+    this.slug = slugify(this.title, { lower: true });
     next();
 })
 

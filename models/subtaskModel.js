@@ -40,7 +40,7 @@ const subtaskSchema = new mongoose.Schema({
 })
 
 subtaskSchema.pre('save', function (next) {
-    this.slug = slugify(this.title);
+    this.slug = slugify(this.title, { lower: true });
     next();
 })
 
