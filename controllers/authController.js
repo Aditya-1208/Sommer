@@ -1,20 +1,55 @@
+const appError = require("../utils/appError");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+
 const catchAsync = require(`${__dirname}/../utils/catchAsync.js`);
 const userModel = require(`${__dirname}/../models/userModel.js`);
 
-exports.signup = catchAsync(async (req, res, next) => {
-    //run validators using suitable package or yourself!
-    const newUser = await userModel.create(req.body);
-    newUser.password = undefined;
-    const jwt = newUser.signJWT();
+const validatePassword = (candidatePassword, userPassword) => {
+    return bcrypt.compare(candidatePassword, userPassword);
+}
+
+
+const signJWT = (id) => {
+    return jwt.sign({ id }, process.env.SECRET, {
+        expiresIn: Math.floor(Date.now() / 1000 + 30 * 24 * 60 * 60) //30 days
+    });
+}
+
+const createSendToken = (userInstance, statusCode, res) => {
+    const jwt = signJWT(userInstance.id);
     //set cookie to httpOnly and secure in prod
     const cookieOptions = {
         maxAge: 30 * 24 * 60 * 60 * 1000 //30 days
     }
-    res.cookie('jwt', jwt, cookieOptions).status(201).json({
-        res: "success",
+    userInstance.password = undefined;
+    res.cookie('jwt', jwt, cookieOptions).status(statusCode).json({
+        status: "success",
         data: {
-            newUser
+            user: userInstance
         }
     })
+}
+
+exports.signup = catchAsync(async (req, res, next) => {
+    //run validators using suitable package or yourself!
+    const newUser = await userModel.create(req.body);
+    createSendToken(newUser, 201, res);
+    next();
+})
+
+
+exports.login = catchAsync(async (req, res, next) => {
+    console.log(req.body);
+    if (!req.body.userId)
+        return next(new appError("No username or email provided", 400));
+    let user = await userModel.findOne({ $or: [{ username: req.body.userId }, { email: req.body.userId }] });
+    if (!user)
+        return next(new appError("No user exists with given email or username", 400));
+    const passwordValid = validatePassword(req.body.password, user.password);
+    if (!passwordValid)
+        return next(new appError("Invalid Credentials, please try again", 401))
+    createSendToken(user, 200, res);
     next();
 })
