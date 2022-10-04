@@ -4,12 +4,22 @@ const fs = require('fs');
 
 
 const { seedModel } = require(`${__dirname}/../controllers/connectionController.js`);
+
 const clubModel = require(`${__dirname}/../models/clubModel.js`);
 const userModel = require(`${__dirname}/../models/userModel.js`);
+const taskModel = require(`${__dirname}/../models/taskModel.js`);
+const subtaskModel = require(`${__dirname}/../models/subtaskModel.js`);
 
 const clubs = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/db-data/clubs.json`, { encoding: "utf-8" }));
 const users = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/db-data/users.json`, { encoding: "utf-8" }));
+const tasks = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/db-data/tasks.json`, { encoding: "utf-8" }));
+const subtasks = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/db-data/subtasks.json`, { encoding: "utf-8" }));
 
-
-// seedModel(clubModel, clubs);
-seedModel(userModel, users);
+if (process.argv[2] == 'club')
+    seedModel(clubModel, clubs);
+else if (process.argv[2] == 'user')
+    seedModel(userModel, users);
+else if (process.argv[2] == 'task')
+    seedModel(taskModel, tasks);
+else if (process.argv[2] == 'subtask')
+    seedModel(subtaskModel, subtasks);

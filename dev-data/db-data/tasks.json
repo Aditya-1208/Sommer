@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Children's day video",
+        "description": "There's a child inside everybody, this children's day, we are making a video to remind everyone of this child!",
+        "socialMedia": "Youtube",
+        "deadline": "2022-11-01T23:59",
+        "club": "Rotaract",
+        "_id": "633c4a11478e9385c037b040"
+    },
+    {
+        "title": "New Year Reel Competition Post",
+        "description": "This new year, we are challenging everone to give a best short video reel of themselves, and we need to roll a post for same! Prizes worth 10000Rs",
+        "socialMedia": "Instagram",
+        "deadline": "2022-12-15T23:59",
+        "club": "IEEE",
+        "_id": "633c4a11478e9385c037b041"
+    },
+    {
+        "title": "Project Expo 2023 post",
+        "description": "We are back with project expo for 2023, we ned to roll out a post showcasing our projects' glances!",
+        "socialMedia": "Facebook",
+        "deadline": "2023-01-15T23:59",
+        "club": "ISTE",
+        "_id": "633c4a11478e9385c037b042"
+    }
+]
