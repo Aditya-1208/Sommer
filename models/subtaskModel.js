@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify')
+const taskModel = require(`${__dirname}/taskModel.js`)
 const subtaskSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -41,6 +42,12 @@ const subtaskSchema = new mongoose.Schema({
 subtaskSchema.pre('save', function (next) {
     this.slug = slugify(this.title);
     next();
+})
+
+subtaskSchema.post('save', async function () {
+    const parentTask = await taskModel.findById(this.task);
+    parentTask.subtasks.push(this._id);
+    await parentTask.save();
 })
 
 module.exports = mongoose.model('Subtask', subtaskSchema);
