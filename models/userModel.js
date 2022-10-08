@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 const clubModel = require('./clubModel');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -37,6 +38,11 @@ const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now()
+    },
+    role: {
+        type: 'String',
+        enum: ['member', 'lead', 'coordinator'],
+        deafult: 'member'
     }
 })
 

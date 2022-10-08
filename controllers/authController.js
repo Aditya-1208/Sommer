@@ -1,5 +1,6 @@
 const appError = require("../utils/appError");
 const bcrypt = require('bcrypt');
+const { promisify } = require('util')
 const jwt = require('jsonwebtoken');
 
 
@@ -18,14 +19,15 @@ const signJWT = (id) => {
 }
 
 const createSendToken = (userInstance, statusCode, res) => {
-    const jwt = signJWT(userInstance.id);
+    const token = signJWT(userInstance.id);
     //set cookie to httpOnly and secure in prod
     const cookieOptions = {
         maxAge: 30 * 24 * 60 * 60 * 1000 //30 days
     }
     userInstance.password = undefined;
-    res.cookie('jwt', jwt, cookieOptions).status(statusCode).json({
+    res.cookie('jwt', token, cookieOptions).status(statusCode).json({
         status: "success",
+        token,
         data: {
             user: userInstance
         }
@@ -41,7 +43,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 
 exports.login = catchAsync(async (req, res, next) => {
-    console.log(req.body);
     if (!req.body.userId)
         return next(new appError("No username or email provided", 400));
     let user = await userModel.findOne({ $or: [{ username: req.body.userId }, { email: req.body.userId }] });
@@ -53,3 +54,23 @@ exports.login = catchAsync(async (req, res, next) => {
     createSendToken(user, 200, res);
     next();
 })
+
+exports.restrictTo = (...roles) => {
+    return catchAsync(async (req, res, next) => {
+        if (!roles.includes(req.user.role))
+            return next(new appError('You are not Previlaged to perform this action', 403));
+        next();
+    })
+}
+
+exports.protect = catchAsync(async (req, res, next) => {
+    if (!req.cookies.jwt)
+        return next(new appError('Unauthorized acess, please login again', 401));
+    let token = req.cookies.jwt;
+    const decoded = await promisify(jwt.verify)(token, process.env.SECRET);
+    const user = await userModel.findById(decoded.id);
+    if (!user)
+        return next(new appError('Unauthorized acess, please login again', 401));
+    req.user = user;
+    next();
+});
