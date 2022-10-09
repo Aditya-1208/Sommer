@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 const clubModel = require(`${__dirname}/clubModel.js`)
-
+const fileClass = require(`${__dirname}/../utils/fileHandler.js`)
 const taskSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -43,14 +43,22 @@ const taskSchema = new mongoose.Schema({
             ref: 'Subtask',
         }]
     },
+    folder: {
+        type: String,
+    },
     createdAt: {
         type: Date,
         default: Date.now()
     }
 })
 
-taskSchema.pre('save', function (next) {
+taskSchema.pre('save', async function (next) {
     this.slug = slugify(this.title, { lower: true });
+    if (this.folder)
+        return next();
+    const fileHandler = new fileClass;
+    const parentFolder = (await clubModel.findOne({ name: this.club })).folder
+    this.folder = await fileHandler.createNewFolder(this.slug, parentFolder);
     next();
 })
 
