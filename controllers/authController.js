@@ -22,7 +22,8 @@ const createSendToken = (userInstance, statusCode, res) => {
     const token = signJWT(userInstance.id);
     //set cookie to httpOnly and secure in prod
     const cookieOptions = {
-        maxAge: 30 * 24 * 60 * 60 * 1000 //30 days
+        maxAge: 30 * 24 * 60 * 60 * 1000, //30 days
+        httpOnly: true
     }
     userInstance.password = undefined;
     res.cookie('jwt', token, cookieOptions).status(statusCode).json({
@@ -48,7 +49,7 @@ exports.login = catchAsync(async (req, res, next) => {
     let user = await userModel.findOne({ $or: [{ username: req.body.userId }, { email: req.body.userId }] });
     if (!user)
         return next(new appError("No user exists with given email or username", 400));
-    const passwordValid = validatePassword(req.body.password, user.password);
+    const passwordValid = await validatePassword(req.body.password, user.password);
     if (!passwordValid)
         return next(new appError("Invalid Credentials, please try again", 401))
     createSendToken(user, 200, res);
@@ -74,3 +75,27 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.user = user;
     next();
 });
+
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+    if (req.cookies.jwt) {
+        const token = req.cookies.jwt;
+        const tokenDecoded = await promisify(jwt.verify)(token, process.env.SECRET)
+        const currentUser = await userModel.findById(tokenDecoded.id);
+        if (!currentUser)
+            return next();
+        //So there is a logged in user, make it accessible to template
+        res.locals.user = currentUser;
+    }
+    next();
+})
+
+exports.logout = catchAsync(async (req, res, next) => {
+    res.clearCookie('jwt');
+    res.status(200).json({
+        "status": "success",
+        data: {
+
+        }
+    });
+    next();
+})

@@ -1,13 +1,17 @@
 nav.navbar.navbar-expand-lg.bg-white.border
   .container-fluid
-    a.navbar-brand.fw-bolder(href='#') Sommer
+    a.navbar-brand.fw-bolder(href=`${user?'/dashboard':'/'}`) Sommer
     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
       span.navbar-toggler-icon
     #navbarSupportedContent.collapse.navbar-collapse
-      ul.navbar-nav.me-auto.mb-2.mb-lg-0
-        li.nav-item
-          a.nav-link(href='/login') Login
-        li.nav-item
-          a.nav-link(href='/signup') Signup
+      ul.navbar-nav.ms-auto.mb-2.mb-lg-0
         li.nav-item
           a.nav-link(href='/contact') Contact
+        if (!user)
+          li.nav-item
+            a.nav-link(href='/login') Login
+          li.nav-item
+            a.nav-link(href='/signup') Signup
+        else
+          li.nav-item
+            button.btn.btn-dark#btn--logout(href='') Logout

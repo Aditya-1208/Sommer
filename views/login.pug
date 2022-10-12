@@ -1,0 +1,16 @@
+extends base
+
+block content
+    .container.mt-5
+        p.h2 Login to Sommer
+        form#form--login
+            .mt-5
+            label.form-label(for="username_email") Username/Email
+            input.form-control#username_email(type="text" required)
+            .mt-3
+            label.form-label(for="password") Password
+            input.form-control#password(type="password" required)
+            .text-end
+                button.btn.btn-light.mt-3.fw-bold.btn--login(type="submit" required) Submit
+            .text-center 
+                a(href="#") forgot password?

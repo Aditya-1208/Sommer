@@ -1,0 +1,31 @@
+extends base
+
+block content
+    .container.mt-5
+        p.h2 Signup for Sommer
+        form#form--signup
+            .mt-5
+            label.form-label(for="username") Username
+            input.form-control#username(type="text" required)
+            .mt-3
+            label.form-label(for="email") Email
+            input.form-control#email(type="email" required)
+            .mt-3
+            label.form-label(for="password") Password
+            input.form-control#password(type="password" required)
+            .mt-3
+            label.form-label(for="password--confirm") Confirm Password
+            input.form-control#password--confirm(type="password" required)
+            .mt-3
+            label.form-label(for="club--select") Club
+            select.form-select#club--select(aria-label="Club Selection" required)
+                - for (let club of clubs)
+                    option(value=`${club.name}`)= club.name
+            .mt-3
+            label.form-label(for="role--select") Role
+            select.form-select#role--select(aria-label="Role Selection" required)
+                    option(value="member") member
+                    option(value="coordinator") coordinator
+                    option(value="lead") lead
+            .text-end
+                button.btn.btn-light.mt-3.fw-bold.btn--login(type="submit" required) Register
