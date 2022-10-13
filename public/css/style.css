@@ -2,3 +2,12 @@
     top: 25%;
     max-width: 75%;
 }
+
+.btn {
+    font-weight: bold;
+}
+
+.btn-secondary {
+    background-color: #d9d9d9;
+    color: #000;
+}

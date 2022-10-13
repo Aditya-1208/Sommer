@@ -17,8 +17,8 @@ const subtaskSchema = new mongoose.Schema({
         type: String,
     },
     asignee: {
-        type: mongoose.Types.ObjectId,
-        ref: 'User'
+        type: String,
+        default: 'None'
     },
     status: {
         type: String,

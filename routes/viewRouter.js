@@ -9,7 +9,6 @@ router.use(authController.isLoggedIn);
 router.get('/', viewController.renderHome);
 router.get('/login', viewController.renderLogin);
 router.get('/signup', viewController.renderSignup);
-router.use(authController.protect);
-router.get('/dashboard', viewController.renderDashboard);
+router.get('/dashboard', authController.protect, viewController.renderDashboard);
 
 module.exports = router;

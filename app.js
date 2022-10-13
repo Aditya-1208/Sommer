@@ -17,10 +17,19 @@ app.use('/', viewRoutes);
 
 app.use((err, req, res, next) => {
     console.log(err);
-    res.status(err.statusCode || 500).json({
-        status: "fail",
+    res.status(err.statusCode || 500).render('error', {
+        title: err.message,
+        heading: 'Sorry, there\'s an error',
         message: err.message
     })
+})
+
+app.get('*', (req, res, next) => {
+    res.status(404).render('error', {
+        title: 'page not found',
+        heading: 'Error 404',
+        message: 'Page Not Found'
+    });
 })
 
 module.exports = app;
