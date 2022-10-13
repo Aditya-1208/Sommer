@@ -4,9 +4,9 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel='shortcut icon' type='image/x-icon' href='./img/favicon.ico')
-        link(href="./css/bootstrap.css" rel="stylesheet")
-        link(href="./css/style.css" rel="stylesheet")
+        base(href=`${baseUrl}`)
+        link(rel='shortcut icon' type='image/x-icon' href='/img/favicon.ico')
+        link(href="/css/bootstrap.css" rel="stylesheet")
         script(src="https://unpkg.com/phosphor-icons")
         title= title
         block head
@@ -18,6 +18,5 @@ html(lang="en")
     
     footer
         include includes/footer
-            script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous")
             script(src="/js/dist/index.js" type="text/javascript")
 

@@ -16,12 +16,18 @@ app.use('/', viewRoutes);
 
 
 app.use((err, req, res, next) => {
-    console.log(err);
-    res.status(err.statusCode || 500).render('error', {
+    if (req.headers.axiosreq) {
+        return res.status(err.statusCode || 500).json({
+            status: "failure",
+            message: err.message
+        })
+    }
+    return res.status(err.statusCode || 500).render('error', {
         title: err.message,
         heading: 'Sorry, there\'s an error',
         message: err.message
     })
+
 })
 
 app.get('*', (req, res, next) => {

@@ -4,7 +4,7 @@ block content
     .container.mt-4
         .d-flex.justify-content-between.fs-5
             p.mb-0 Your Subtasks 
-            a(href="#") All tasks &rarr;
+            a(href=`/dashboard/${user.club}`) All tasks &rarr;
         p.fw-bold.h1 Dashboard
         - for (let subtask of subtasks)
             include includes/subtask

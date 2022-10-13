@@ -1,0 +1,10 @@
+extends base
+
+block content
+    .container.mt-4
+        .d-flex.justify-content-between.fs-5
+            p.mb-0 All Tasks 
+            a(href="#") My Subtasks &rarr;
+        p.fw-bold.h1 Dashboard
+        - for (let task of tasks)
+            include includes/task

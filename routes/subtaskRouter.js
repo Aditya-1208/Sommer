@@ -7,9 +7,8 @@ const router = express.Router({ mergeParams: true });
 router.use(authController.protect)
 router.route('/:subtask/file').post(fileController.decodeFile, fileController.uploadFile).get(fileController.downloadFile);
 
-router.use(authController.restrictTo('lead', 'coordinator'));
-router.route('/').post(taskController.createNewSubtask);
-router.route('/:subtask').patch(taskController.editSubtask).delete(taskController.deleteSubtask)
+router.route('/').post(authController.restrictTo('lead', 'coordinator'), taskController.createNewSubtask);
+router.route('/:subtask').patch(authController.restrictTo('lead', 'coordinator'), taskController.editSubtask).delete(authController.restrictTo('lead', 'coordinator'), taskController.deleteSubtask)
 
 
 module.exports = router;
