@@ -37,11 +37,6 @@ const taskSchema = new mongoose.Schema({
             message: 'Not a valid club name'
         }
     },
-    subtasks: {
-        type: [{
-            type: String
-        }]
-    },
     folder: {
         type: String,
     },
@@ -49,10 +44,19 @@ const taskSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     }
+}, {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+})
+
+taskSchema.virtual('subtasks', {
+    ref: 'Subtask',
+    localField: 'slug',
+    foreignField: 'task'
 })
 
 taskSchema.pre('save', async function (next) {
-    this.slug = slugify(this.title, { lower: true });
+    this.slug = slugify(this.title, { lower: true, strict: true });
     if (this.folder)
         return next();
     const fileHandler = new fileClass;

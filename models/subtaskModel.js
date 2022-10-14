@@ -39,14 +39,8 @@ const subtaskSchema = new mongoose.Schema({
 })
 
 subtaskSchema.pre('save', function (next) {
-    this.slug = slugify(this.title, { lower: true });
+    this.slug = slugify(this.title, { lower: true, strict: true });
     next();
-})
-
-subtaskSchema.post('save', async function () {
-    const parentTask = await taskModel.findOne({ slug: this.task });
-    parentTask.subtasks.push(this.slug);
-    await parentTask.save();
 })
 
 module.exports = mongoose.model('Subtask', subtaskSchema);

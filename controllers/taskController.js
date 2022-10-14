@@ -18,6 +18,7 @@ exports.createNewTask = catchAsync(async (req, res, next) => {
 })
 
 exports.createNewSubtask = catchAsync(async (req, res, next) => {
+    req.body.task = req.params.task
     const subtask = await subtaskModel.create(req.body);
     res.status(201).json({
         status: "success",
@@ -74,8 +75,6 @@ exports.deleteSubtask = catchAsync(async (req, res, next) => {
     const deletedSubtask = await subtaskModel.findOneAndDelete({ slug: req.params.subtask });
     if (!deletedSubtask)
         return next(new appError('subtask not found', 404));
-    //remove reference from parent task
-    await taskModel.updateOne({ slug: req.query.task }, { $pull: { subtasks: deletedSubtask.slug } });
     const fileHandler = new fileClass;
     if (deletedSubtask.file)
         await fileHandler.deleteFile(deletedSubtask.file);

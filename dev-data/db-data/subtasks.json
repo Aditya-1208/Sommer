@@ -3,54 +3,54 @@
         "title": "thumbnail",
         "description": "Make a thumbnail for children's day video, depicting the children's day celebration in the school",
         "deadline": "2022-11-01T23:59",
-        "task": "633c4a11478e9385c037b040"
+        "task": "childrens-day-video"
     },
     {
         "title": "intro video",
         "description": "Make a small intro with children's day theme while promoting our club at the same time",
         "deadline": "2022-11-05T23:59",
-        "task": "633c4a11478e9385c037b040"
+        "task": "childrens-day-video"
     },
     {
         "title": "collect and merge videos",
         "description": "There's a child inside everybody, Make a video  with same theme by collecting various videos",
         "deadline": "2022-11-09T23:59",
-        "task": "633c4a11478e9385c037b040"
+        "task": "childrens-day-video"
     },
     {
         "title": "Layout and design",
         "description": "Design a layout with post-size, also specify texts and colours and theme!",
         "deadline": "2022-12-20T23:59",
-        "task": "633c4a11478e9385c037b041"
+        "task": "new-year-reel-competition-post"
     },
     {
         "title": "finish the post",
         "description": "Use designed layout to finish the post",
         "deadline": "2022-12-28T23:59",
-        "task": "633c4a11478e9385c037b041"
+        "task": "new-year-reel-competition-post"
     },
     {
         "title": "Front cover",
         "description": "Design single poster displaying our sigs",
         "deadline": "2023-03-21T23:59",
-        "task": "633c4a11478e9385c037b042"
+        "task": "project-expo-2023-post"
     },
     {
         "title": "Back cover",
         "description": "Design single page for back encouraging people to join our club",
         "deadline": "2023-03-21T23:59",
-        "task": "633c4a11478e9385c037b042"
+        "task": "project-expo-2023-post"
     },
     {
         "title": "Showcase circuital sigs",
         "description": "Show glances of all the circuital projects of the club",
         "deadline": "2023-03-25T23:59",
-        "task": "633c4a11478e9385c037b042"
+        "task": "project-expo-2023-post"
     },
     {
         "title": "Showcase non-circuital sigs",
         "description": "Show glances of all the non-circuital projects of the club",
         "deadline": "2023-03-25T23:59",
-        "task": "633c4a11478e9385c037b042"
+        "task": "project-expo-2023-post"
     }
 ]

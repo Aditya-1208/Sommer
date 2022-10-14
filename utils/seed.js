@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config({ path: `${__dirname}/../config.env` });
 const fs = require('fs');
+const fileClass = require('./fileHandler.js');
 
 
 const { seedModel } = require(`${__dirname}/../controllers/connectionController.js`);
@@ -15,6 +16,15 @@ const users = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/db-data/users
 const tasks = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/db-data/tasks.json`, { encoding: "utf-8" }));
 const subtasks = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/db-data/subtasks.json`, { encoding: "utf-8" }));
 
+const seedAll = async () => {
+    const fileHandler = new fileClass;
+    await fileHandler.deleteAllFiles();
+    await seedModel(clubModel, clubs);
+    await seedModel(userModel, users);
+    await seedModel(taskModel, tasks);
+    await seedModel(subtaskModel, subtasks);
+}
+
 if (process.argv[2] == 'club')
     seedModel(clubModel, clubs);
 else if (process.argv[2] == 'user')
@@ -23,3 +33,5 @@ else if (process.argv[2] == 'task')
     seedModel(taskModel, tasks);
 else if (process.argv[2] == 'subtask')
     seedModel(subtaskModel, subtasks);
+else if (process.argv[2] == 'all')
+    seedAll();
