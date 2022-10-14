@@ -57,7 +57,7 @@ exports.deleteTask = catchAsync(async (req, res, next) => {
     const deletedTask = await taskModel.findOneAndDelete({ slug: req.params.task });
     if (!deletedTask)
         return next(new appError('Task not found', 404));
-    const deletedSubtasks = await subtaskModel.deleteMany({ task: deletedTask._id });
+    const deletedSubtasks = await subtaskModel.deleteMany({ task: deletedTask.slug });
     const fileHandler = new fileClass;
     if (deletedTask.folder)
         await fileHandler.deleteFile(deletedTask.folder);
@@ -71,11 +71,11 @@ exports.deleteTask = catchAsync(async (req, res, next) => {
 })
 
 exports.deleteSubtask = catchAsync(async (req, res, next) => {
-    const deletedSubtask = await subtaskModel.findOneAndDelete({ $and: [{ slug: req.params.subtask }, { task: req.query.taskId }] });
+    const deletedSubtask = await subtaskModel.findOneAndDelete({ slug: req.params.subtask });
     if (!deletedSubtask)
         return next(new appError('subtask not found', 404));
     //remove reference from parent task
-    await taskModel.updateOne({ _id: req.query.taskId }, { $pull: { subtasks: deletedSubtask._id } });
+    await taskModel.updateOne({ slug: req.query.task }, { $pull: { subtasks: deletedSubtask.slug } });
     const fileHandler = new fileClass;
     if (deletedSubtask.file)
         await fileHandler.deleteFile(deletedSubtask.file);

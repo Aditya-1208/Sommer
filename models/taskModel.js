@@ -39,8 +39,7 @@ const taskSchema = new mongoose.Schema({
     },
     subtasks: {
         type: [{
-            type: mongoose.Types.ObjectId,
-            ref: 'Subtask',
+            type: String
         }]
     },
     folder: {

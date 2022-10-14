@@ -29,8 +29,7 @@ const subtaskSchema = new mongoose.Schema({
         type: String
     },
     task: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Task',
+        type: String,
         required: [true, 'subtask cannot exist without task']
     },
     createdAt: {
@@ -45,8 +44,8 @@ subtaskSchema.pre('save', function (next) {
 })
 
 subtaskSchema.post('save', async function () {
-    const parentTask = await taskModel.findById(this.task);
-    parentTask.subtasks.push(this._id);
+    const parentTask = await taskModel.findOne({ slug: this.task });
+    parentTask.subtasks.push(this.slug);
     await parentTask.save();
 })
 
