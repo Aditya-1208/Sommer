@@ -42,7 +42,7 @@ exports.editTask = catchAsync(async (req, res, next) => {
     next();
 })
 exports.editSubtask = catchAsync(async (req, res, next) => {
-    const edittedSubtask = await subtaskModel.findOneAndUpdate({ $and: [{ slug: req.params.subtask }, { task: req.query.taskId }] }, req.body, { runValidators: true, returnDocument: 'after' });
+    const edittedSubtask = await subtaskModel.findOneAndUpdate({ slug: req.params.subtask }, req.body, { runValidators: true, returnDocument: 'after' });
     if (!edittedSubtask)
         return next(new appError('subtask not found', 404));
     res.status(200).json({

@@ -11,7 +11,7 @@ window.deleteByParam = async (url) => {
                 axiosReq: true
             }
         });
-        alert('Deleted task successfully', "success");
+        alert('Deleted successfully', "success");
         location.reload();
     } catch (error) {
         console.log(error);

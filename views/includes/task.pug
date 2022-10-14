@@ -28,7 +28,7 @@
         p.fs-4 #[span.fs-2= task.description[0]]#{task.description.slice(1)}
     .d-flex.justify-content-between.align-items-center
         p.fw-bold.mb-0 Subtasks : #{task.subtasks.length}
-        a.p0.btn.btn-secondary.d-flex.align-middle(href=`/dashboard/${task.club}/new`) New Subtask 
+        a.p0.btn.btn-secondary.d-flex.align-middle(href=`/dashboard/${task.club}/${task.slug}/new`) New Subtask 
             i.mb-0.w3.h3.ph-plus-circle
     hr.mt-2
     .accordion(id=`${task.slug}`)

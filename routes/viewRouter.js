@@ -15,6 +15,8 @@ router.get('/signup', viewController.renderSignup);
 router.get('/dashboard', authController.protect, viewController.renderDashboard);
 router.get('/dashboard/:club', authController.protect, viewController.renderClubDashboard);
 router.get('/dashboard/:club/new', authController.protect, viewController.renderNewTaskForm);
+router.get('/dashboard/:club/:task/new', authController.protect, viewController.renderNewSubtaskForm);
 router.get('/dashboard/:club/:task/edit', authController.protect, viewController.renderEditTaskForm);
+router.get('/dashboard/:club/:task/:subtask/edit', authController.protect, viewController.renderEditSubtaskForm);
 
 module.exports = router;

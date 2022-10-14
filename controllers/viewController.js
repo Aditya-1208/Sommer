@@ -52,6 +52,18 @@ exports.renderNewTaskForm = catchAsync(async (req, res, next) => {
         mode: "new"
     });
 })
+exports.renderNewSubtaskForm = catchAsync(async (req, res, next) => {
+    //automatically error 404 in the case
+    if (req.params.club !== req.user.club)
+        return next();
+    res.status(200).render('task_form', {
+        title: `New subtask : ${req.params.task}`,
+        heading: `Create New Subtask`,
+        type: "subtask",
+        parentTaskSlug: req.params.task,
+        mode: "new"
+    });
+})
 exports.renderEditTaskForm = catchAsync(async (req, res, next) => {
     //automatically error 404 in the case
     if (req.params.club !== req.user.club)
@@ -64,6 +76,21 @@ exports.renderEditTaskForm = catchAsync(async (req, res, next) => {
         heading: `Editing task : ${task.title}`,
         task,
         type: "task",
+        mode: "edit"
+    });
+})
+exports.renderEditSubtaskForm = catchAsync(async (req, res, next) => {
+    //automatically error 404 in the case
+    if (req.params.club !== req.user.club)
+        return next();
+    const subtask = await subtaskModel.findOne({ slug: req.params.subtask });
+    if (subtask.task !== req.params.task)
+        return next();
+    res.status(200).render('task_form', {
+        title: `Edit subtask : ${subtask.title}`,
+        heading: `Editing subtask : ${subtask.title}`,
+        subtask,
+        type: "subtask",
         mode: "edit"
     });
 })

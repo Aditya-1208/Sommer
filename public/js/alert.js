@@ -9,4 +9,5 @@ export const alert = (message, type) => {
     ].join('')
 
     document.querySelector("#alert").append(wrapper);
+    document.body.scrollIntoView({ behavior: "smooth" });
 }

@@ -7,8 +7,7 @@ import { alert } from "./alert.js";
 
 const loginForm = document.querySelector("#form--login");
 const signupForm = document.querySelector("#form--signup");
-const newTaskForm = document.querySelector("#form--task-new");
-const editTaskForm = document.querySelector("#form--task-edit");
+const taskSubtaskForm = document.querySelector("#form--task_subtask");
 const logoutBtn = document.querySelector("#btn--logout");
 
 if (loginForm) {
@@ -42,21 +41,12 @@ if (logoutBtn) {
     })
 }
 
-if (newTaskForm) {
-    newTaskForm.addEventListener('submit', (e) => {
+if (taskSubtaskForm) {
+    taskSubtaskForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const url = newTaskForm.dataset.url;
-        const method = newTaskForm.dataset.method;
-        const formData = new FormData(newTaskForm);
-        createNewTask(url, method, formData);
-    })
-}
-if (editTaskForm) {
-    editTaskForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const url = editTaskForm.dataset.url;
-        const method = editTaskForm.dataset.method;
-        const formData = new FormData(editTaskForm);
+        const url = taskSubtaskForm.dataset.url;
+        const method = taskSubtaskForm.dataset.method;
+        const formData = new FormData(taskSubtaskForm);
         createNewTask(url, method, formData);
     })
 }

@@ -1,7 +1,7 @@
 extends base
 
 mixin som(name)
-    option(value=`${name}`)= name
+    option(value=`${name}` selected=(task&&task.socialMedia===name))= name
 
 
 block content
@@ -10,12 +10,14 @@ block content
             return (new Date(jsDate.getTime() - jsDate.getTimezoneOffset() * 60000).toISOString()).slice(0, -1);
         }
     -
-        let url;
+        let url = `/dashboard/${user.club}`
         if(type==="task")
-            url = `/dashboard/${user.club}/${mode==='edit'?task.slug:''}`
+            url += `/${mode==='edit'?task.slug:''}`
+        else
+            url += `/${parentTaskSlug}/${mode==='edit'?subtask.slug:''}`
     .container.mt-5
-        p.h2 #{heading} : #{user.club} Club
-        form(data-url=`${url}` data-method=`${mode==="new"?'POST':'PATCH'}` id=`form--${type}-${mode}`)
+        p.h2 #{heading}
+        form#form--task_subtask(data-url=`${url}` data-method=`${mode==="new"?'POST':'PATCH'}`)
             .mt-5
                 label.form-label(for="title") Title
                 input.form-control#title(type="text" name="title" value=`${task?task.title:(subtask?subtask.title:'')}` required)
@@ -28,7 +30,7 @@ block content
             if (type==="task")
                 .mt-3
                     label.form-label(for="social_media--select") Social Media
-                    select.form-select#social_media--select(aria-label="Social media Selection" name="socialMedia" value=`${task?task.socialMedia:''}` required)
+                    select.form-select#social_media--select(aria-label="Social media Selection" name="socialMedia" required)
                         +som('Instagram')
                         +som('Facebook')
                         +som('Twitter')

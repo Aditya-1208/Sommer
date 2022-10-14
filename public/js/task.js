@@ -14,8 +14,8 @@ export const createNewTask = async (url, method, formData) => {
                 axiosreq: true
             }
         })
-        alert('Successfully created task', 'success');
-        window.location.href = `/dashboard/${data.club}`
+        alert(`${method === 'POST' ? 'Created' : 'Edited'} successfully`, 'success');
+        window.location.href = document.referrer
 
     } catch (error) {
         console.log(error);
