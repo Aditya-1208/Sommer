@@ -14,11 +14,12 @@
     i.mb-0.fs-1.position-absolute.top-0.start-0.translate-middle(class=`ph-${task.socialMedia.toLowerCase()}-logo`)
     .d-flex.justify-content-between.align-items-center
         p.h3= task.title
-        .d-flex.gap-2
-            a.p-0.btn.btn-light.d-flex.align-middle(href=`/dashboard/${task.club}/${task.slug}/edit`) 
-                i.mb-0.w3.h3.ph-note-pencil.text-primary
-            button.p-0.btn.btn-light.text-danger(data-bs-toggle="modal" data-bs-target=`#modal-${task.slug}`)
-                i.mb-0.w3.h3.ph-trash
+        if (user.role==='lead' || user.role==='coordinator')
+            .d-flex.gap-2
+                a.p-0.btn.btn-light.d-flex.align-middle(href=`/dashboard/${task.club}/${task.slug}/edit`) 
+                    i.mb-0.w3.h3.ph-note-pencil.text-primary
+                button.p-0.btn.btn-light.text-danger(data-bs-toggle="modal" data-bs-target=`#modal-${task.slug}`)
+                    i.mb-0.w3.h3.ph-trash
     .d-flex.justify-content-between.gap-4
         p #[span.fw-bold Social-media] : #{task.socialMedia}
         p

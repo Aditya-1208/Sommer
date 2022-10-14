@@ -99,3 +99,9 @@ exports.logout = catchAsync(async (req, res, next) => {
     });
     next();
 })
+
+exports.correctClub = (req, res, next) => {
+    if (req.params.club != req.user.club)
+        return next(new appError('Unauthorized access', 403))
+    next()
+}

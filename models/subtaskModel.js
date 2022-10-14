@@ -18,7 +18,6 @@ const subtaskSchema = new mongoose.Schema({
     },
     asignee: {
         type: String,
-        default: 'None'
     },
     status: {
         type: String,

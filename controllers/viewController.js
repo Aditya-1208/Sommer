@@ -25,15 +25,12 @@ exports.renderSignup = catchAsync(async (req, res, next) => {
     });
 })
 exports.renderDashboard = catchAsync(async (req, res, next) => {
-    const subtasks = await subtaskModel.find().populate('task');
+    const subtasks = await subtaskModel.find({ asignee: req.user.username }).populate('task');
     res.status(200).render('dashboard', {
         title: 'Your Subtasks', subtasks
     });
 })
 exports.renderClubDashboard = catchAsync(async (req, res, next) => {
-    //automatically error 404 in the case
-    if (req.params.club !== req.user.club)
-        return next();
     const tasks = await taskModel.find({ club: req.params.club }).populate('subtasks');
     res.status(200).render('club_dashboard', {
         title: `${req.user.club} Club Dashboard`, tasks
@@ -42,9 +39,6 @@ exports.renderClubDashboard = catchAsync(async (req, res, next) => {
 
 
 exports.renderNewTaskForm = catchAsync(async (req, res, next) => {
-    //automatically error 404 in the case
-    if (req.params.club !== req.user.club)
-        return next();
     res.status(200).render('task_form', {
         title: `New task : ${req.user.club} Club`,
         heading: `Create New Task For ${req.user.club} club`,
@@ -53,9 +47,6 @@ exports.renderNewTaskForm = catchAsync(async (req, res, next) => {
     });
 })
 exports.renderNewSubtaskForm = catchAsync(async (req, res, next) => {
-    //automatically error 404 in the case
-    if (req.params.club !== req.user.club)
-        return next();
     res.status(200).render('task_form', {
         title: `New subtask : ${req.params.task}`,
         heading: `Create New Subtask`,
@@ -65,9 +56,6 @@ exports.renderNewSubtaskForm = catchAsync(async (req, res, next) => {
     });
 })
 exports.renderEditTaskForm = catchAsync(async (req, res, next) => {
-    //automatically error 404 in the case
-    if (req.params.club !== req.user.club)
-        return next();
     const task = await taskModel.findOne({ slug: req.params.task });
     if (task.club !== req.params.club)
         return next();
@@ -80,9 +68,6 @@ exports.renderEditTaskForm = catchAsync(async (req, res, next) => {
     });
 })
 exports.renderEditSubtaskForm = catchAsync(async (req, res, next) => {
-    //automatically error 404 in the case
-    if (req.params.club !== req.user.club)
-        return next();
     const subtask = await subtaskModel.findOne({ slug: req.params.subtask });
     if (subtask.task !== req.params.task)
         return next();

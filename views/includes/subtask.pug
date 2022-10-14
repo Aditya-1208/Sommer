@@ -53,7 +53,12 @@
         p.fw-bold File : #[a(href="#") #{subtask.slug} &darr;]
     .d-flex.gap-2
     .d-flex.gap-2.mt-2
-        button.btn.btn-secondary.col-6(onclick=`assign("${subtask.id}")`) Assign me
+        if (!subtask.asignee)
+            button.btn.btn-secondary.col-6(onclick=`assignment(\"/dashboard/${user.club}/${subtask.task}/${subtask.slug}/assign\",${"true"})`) Assign me
+        else if (subtask.asignee===user.username)
+            button.btn.btn-secondary.col-6(onclick=`assignment(\"/dashboard/${user.club}/${subtask.task}/${subtask.slug}/unassign\",${"false"})`) Leave subtask
+        else 
+            button.btn.btn-secondary.col-6(disabled) Assign me
         button.btn.btn-secondary.atc-button.col-6 Add To Calendar
 .modal(tabindex="-1" id=`modal-${subtask.slug}`)
     .modal-dialog.modal-dialog-centered
