@@ -2,6 +2,7 @@ import 'bootstrap';
 import { signup } from "./signup.js";
 import { login, logout } from "./login.js";
 import { createNewTask } from './task.js';
+import { deleteByParam } from './delete'
 import { alert } from "./alert.js";
 
 const loginForm = document.querySelector("#form--login");
