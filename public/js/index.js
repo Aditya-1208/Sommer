@@ -6,7 +6,8 @@ import { alert } from "./alert.js";
 
 const loginForm = document.querySelector("#form--login");
 const signupForm = document.querySelector("#form--signup");
-const newTaskForm = document.querySelector("#form--new_task");
+const newTaskForm = document.querySelector("#form--task-new");
+const editTaskForm = document.querySelector("#form--task-edit");
 const logoutBtn = document.querySelector("#btn--logout");
 
 if (loginForm) {
@@ -46,6 +47,15 @@ if (newTaskForm) {
         const url = newTaskForm.dataset.url;
         const method = newTaskForm.dataset.method;
         const formData = new FormData(newTaskForm);
+        createNewTask(url, method, formData);
+    })
+}
+if (editTaskForm) {
+    editTaskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const url = editTaskForm.dataset.url;
+        const method = editTaskForm.dataset.method;
+        const formData = new FormData(editTaskForm);
         createNewTask(url, method, formData);
     })
 }

@@ -33,7 +33,7 @@ exports.renderDashboard = catchAsync(async (req, res, next) => {
 exports.renderClubDashboard = catchAsync(async (req, res, next) => {
     //automatically error 404 in the case
     if (req.params.club !== req.user.club)
-        next();
+        return next();
     const tasks = await taskModel.find({ club: req.params.club }).populate('subtasks');
     res.status(200).render('club_dashboard', {
         title: `${req.user.club} Club Dashboard`, tasks
@@ -44,8 +44,26 @@ exports.renderClubDashboard = catchAsync(async (req, res, next) => {
 exports.renderNewTaskForm = catchAsync(async (req, res, next) => {
     //automatically error 404 in the case
     if (req.params.club !== req.user.club)
-        next();
+        return next();
     res.status(200).render('task_form', {
-        title: `New task : ${req.user.club} Club`
+        title: `New task : ${req.user.club} Club`,
+        heading: `Create New Task For ${req.user.club} club`,
+        type: "task",
+        mode: "new"
+    });
+})
+exports.renderEditTaskForm = catchAsync(async (req, res, next) => {
+    //automatically error 404 in the case
+    if (req.params.club !== req.user.club)
+        return next();
+    const task = await taskModel.findOne({ slug: req.params.task });
+    if (task.club !== req.params.club)
+        return next();
+    res.status(200).render('task_form', {
+        title: `Edit task : ${task.title}`,
+        heading: `Editing task : ${task.title}`,
+        task,
+        type: "task",
+        mode: "edit"
     });
 })

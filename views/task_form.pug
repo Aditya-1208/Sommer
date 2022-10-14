@@ -3,28 +3,38 @@ extends base
 mixin som(name)
     option(value=`${name}`)= name
 
+
 block content
+    -
+        function jsDateToHtml(jsDate){
+            return (new Date(jsDate.getTime() - jsDate.getTimezoneOffset() * 60000).toISOString()).slice(0, -1);
+        }
+    -
+        let url;
+        if(type==="task")
+            url = `/dashboard/${user.club}/${mode==='edit'?task.slug:''}`
     .container.mt-5
-        p.h2 Create New Task For #{user.club} Club
-        form#form--new_task(data-url=`/dashboard/${user.club}/` data-method="POST")
+        p.h2 #{heading} : #{user.club} Club
+        form(data-url=`${url}` data-method=`${mode==="new"?'POST':'PATCH'}` id=`form--${type}-${mode}`)
             .mt-5
                 label.form-label(for="title") Title
-                input.form-control#title(type="text" name="title" required)
+                input.form-control#title(type="text" name="title" value=`${task?task.title:(subtask?subtask.title:'')}` required)
             .mt-3
                 label.form-label(for="description") Description
-                textarea.form-control#description(rows=2 name="description")
+                textarea.form-control#description(rows=2 name="description") #{task?task.description:(subtask?subtask.description:'')}
             .mt-3
                 label.form-label(for="deadline") Deadline
-                input.form-control#deadline(type="datetime-local" name="deadline" required)
-            .mt-3
-                label.form-label(for="social_media--select") Social Media
-                select.form-select#social_media--select(aria-label="Social media Selection" name="socialMedia" required)
-                    +som('Instagram')
-                    +som('Facebook')
-                    +som('Twitter')
-                    +som('Youtube')
-                    +som('Linkedin')
-            input(type="hidden" name="club" value=`${user.club}`)
+                input.form-control#deadline(type="datetime-local" name="deadline" value=`${task?jsDateToHtml(task.deadline):(subtask?jsDateToHtml(subtask.deadline):'')}` required)
+            if (type==="task")
+                .mt-3
+                    label.form-label(for="social_media--select") Social Media
+                    select.form-select#social_media--select(aria-label="Social media Selection" name="socialMedia" value=`${task?task.socialMedia:''}` required)
+                        +som('Instagram')
+                        +som('Facebook')
+                        +som('Twitter')
+                        +som('Youtube')
+                        +som('Linkedin')
+                input(type="hidden" name="club" value=`${user.club}`)
 
             .text-end
                 button.btn.btn-light.mt-3.fw-bold(type="submit") Submit
