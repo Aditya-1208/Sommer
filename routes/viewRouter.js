@@ -13,6 +13,7 @@ router.get('/', viewController.renderHome);
 router.get('/login', viewController.renderLogin);
 router.get('/signup', viewController.renderSignup);
 router.get('/dashboard', authController.protect, viewController.renderDashboard);
-router.get('/dashboard/:club', authController.protect, viewController.renderClubTasks);
+router.get('/dashboard/:club', authController.protect, viewController.renderClubDashboard);
+router.get('/dashboard/:club/new', authController.protect, viewController.renderNewTaskForm);
 
 module.exports = router;

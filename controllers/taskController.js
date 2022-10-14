@@ -5,7 +5,8 @@ const appError = require(`${__dirname}/../utils/appError.js`)
 const fileClass = require(`${__dirname}/../utils/fileHandler.js`)
 
 exports.createNewTask = catchAsync(async (req, res, next) => {
-    req.subtasks = [];
+    console.log(req.body);
+    req.body.subtasks = [];
     const task = await taskModel.create(req.body);
     res.status(201).json({
         status: "success",

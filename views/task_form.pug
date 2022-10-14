@@ -1,0 +1,30 @@
+extends base
+
+mixin som(name)
+    option(value=`${name}`)= name
+
+block content
+    .container.mt-5
+        p.h2 Create New Task For #{user.club} Club
+        form#form--new_task(data-url=`/dashboard/${user.club}/` data-method="POST")
+            .mt-5
+                label.form-label(for="title") Title
+                input.form-control#title(type="text" name="title" required)
+            .mt-3
+                label.form-label(for="description") Description
+                textarea.form-control#description(rows=2 name="description")
+            .mt-3
+                label.form-label(for="deadline") Deadline
+                input.form-control#deadline(type="datetime-local" name="deadline" required)
+            .mt-3
+                label.form-label(for="social_media--select") Social Media
+                select.form-select#social_media--select(aria-label="Social media Selection" name="socialMedia" required)
+                    +som('Instagram')
+                    +som('Facebook')
+                    +som('Twitter')
+                    +som('Youtube')
+                    +som('Linkedin')
+            input(type="hidden" name="club" value=`${user.club}`)
+
+            .text-end
+                button.btn.btn-light.mt-3.fw-bold(type="submit") Submit

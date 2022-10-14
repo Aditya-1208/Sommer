@@ -1,10 +1,12 @@
 import 'bootstrap';
 import { signup } from "./signup.js";
 import { login, logout } from "./login.js";
+import { createNewTask } from './task.js';
 import { alert } from "./alert.js";
 
 const loginForm = document.querySelector("#form--login");
 const signupForm = document.querySelector("#form--signup");
+const newTaskForm = document.querySelector("#form--new_task");
 const logoutBtn = document.querySelector("#btn--logout");
 
 if (loginForm) {
@@ -35,5 +37,15 @@ if (signupForm) {
 if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
         logout();
+    })
+}
+
+if (newTaskForm) {
+    newTaskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const url = newTaskForm.dataset.url;
+        const method = newTaskForm.dataset.method;
+        const formData = new FormData(newTaskForm);
+        createNewTask(url, method, formData);
     })
 }
