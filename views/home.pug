@@ -1,16 +1,37 @@
 extends base
 
+mixin card(url,heading,text)
+    .col
+        .card.card-cover.h-100.text-bg-dark.rounded-4.shadow-lg(style=`background-image: url(${url}); background-position:center;`)
+            .d-flex.flex-column.h-100.p-5.pb-3.text-white.text-shadow-1
+                h3.pt-5.mt-5.mb-4.display-6.lh-1.fw-bold= heading
+                ul.d-flex.list-unstyled.mt-auto
+                    li.d-flex.align-items-center.me-3
+                        small= text
+
 block content
-    .home
-        .position-relative.mb-4.home--cover
-            img.img-fluid.home--cover-img(src="/img/site/cover.jpg")
-            .conatiner.position-absolute.ms-2.home--cover-text
-                p.h2 Social Media Manager
-                p.fs-4 To grow Your audience beyond measure
-        .text-center.fs-5 
-            .container.mb-4
-                p.text-center.mb-2 Get Started Now &rarr;
-                a.btn.btn-light(href="/signup") Sign-up
-            .container
-                p.text-center.mb-2 Already Smart?
-                a.btn.btn-light(href="/login") Login
+    .shadow-sm
+        .p-4.p-md-5.mb-4
+            .col-md-6.px-0
+            h1.display-4.fst-italic #[b So]cial #[b M]edia #[b M]anag#[b er]
+            p.lead.my-3
+                | Sommer helps you build an audience organically. We're a values-driven company that provides affordable, intuitive, marketing tools for ambitious people and teams.
+            p.lead.mb-0.d-flex.gap-2.flex-column.flex-md-row
+                a.fw-bold.btn.btn-dark(href='/#about') More About us &darr;
+                a.fw-bold.btn.btn-dark(href='/signup') Get Started Now &rarr;
+    .container.p-md-3.p-lg-5#features
+        h2.display-6.fst-italic.fw-bolder Features
+        .row.row-cols-1.row-cols-lg-3.align-items-stretch.g-4.py-5
+            +card("/img/feat1.jpg","Collaborate","Get things done together")
+            +card("/img/feat2.jpg","Organize","Keep the mess out")
+            +card("/img/feat3.jpg","Deliver","At pace, like never before")
+
+
+
+
+    .container.p-md-3.p-lg-5#about
+        h2.display-6.fst-italic.fw-bolder About us
+        p.lead.my-3 See what Google has to say about us
+            img.img-fluid.p-2.p-md-3.p-lg-5(src="/img/cover.png")
+        p.lead.my-3 And That's how your tasks will happen, in a #[b.fw-bold Sommer] manner
+

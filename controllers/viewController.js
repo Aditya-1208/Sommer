@@ -25,7 +25,7 @@ exports.renderSignup = catchAsync(async (req, res, next) => {
     });
 })
 exports.renderDashboard = catchAsync(async (req, res, next) => {
-    const subtasks = await subtaskModel.find({ asignee: req.user.username }).populate('task');
+    const subtasks = await subtaskModel.find({ asignee: req.user.username });
     res.status(200).render('dashboard', {
         title: 'Your Subtasks', subtasks
     });

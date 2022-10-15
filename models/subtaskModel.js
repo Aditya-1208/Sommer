@@ -19,11 +19,11 @@ const subtaskSchema = new mongoose.Schema({
     asignee: {
         type: String,
     },
-    status: {
-        type: String,
-        enum: ['Pending', 'Missed', 'Finished'],
-        default: 'Pending'
-    },
+    // status: {
+    //     type: String,
+    //     enum: ['Pending', 'Missed', 'Finished'],
+    //     default: 'Pending'
+    // },
     file: {
         type: String
     },
@@ -35,6 +35,10 @@ const subtaskSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     }
+})
+
+subtaskSchema.virtual('status').get(function () {
+    return (this.file ? 'Completed' : (Date.now() > this.deadline ? 'Missed' : 'Pending'))
 })
 
 subtaskSchema.pre('save', function (next) {
