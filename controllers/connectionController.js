@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const app = require(`${__dirname}/../app.js`);
 exports.connectDb = async () => {
-    const connectionURL = `mongodb+srv://aditya:${process.env.PASSWORD}@cluster0.grdy9dc.mongodb.net/?retryWrites=true&w=majority`
+    const connectionURL = process.env.DB_CONNECTION
     try {
         const connection = await mongoose.connect(connectionURL);
         console.log('Database connected successsfully');
