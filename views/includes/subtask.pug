@@ -47,7 +47,7 @@
     .d-flex.justify-content-end
         p
             b Assignee :
-            = ` ${subtask.asignee}`
+            = ` ${subtask.asignee || 'None'}`
     hr.mt-0
     .d-flex
         p.fw-bold File : #[a(href="#") #{subtask.slug} &darr;]

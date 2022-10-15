@@ -1,7 +1,7 @@
 extends base
 
 block content
-    .container.mt-4
+    .container.mt-4.p-2
         .d-flex.justify-content-between.fs-5
             p.mb-0 All Tasks 
             a(href="#") My Subtasks &rarr;
@@ -9,5 +9,6 @@ block content
             p.fw-bold.h1 Dashboard
             a.p0.btn.btn-secondary.d-flex.align-middle(href=`/dashboard/${user.club}/new`) New Task 
                 i.mb-0.w3.h3.ph-plus-circle
-        - for (let task of tasks)
-            include includes/task
+        .container
+            - for (let task of tasks)
+                include includes/task
