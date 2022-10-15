@@ -1,10 +1,10 @@
-nav.navbar.navbar-expand-lg.bg-white.border
+nav.navbar.navbar-expand-lg.bg-white.border.p-2
   .container-fluid
     a.navbar-brand.fw-bolder(href=`${user?'/dashboard':'/'}`) Sommer
     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
       span.navbar-toggler-icon
     #navbarSupportedContent.collapse.navbar-collapse
-      ul.navbar-nav.ms-auto.mb-2.mb-lg-0
+      ul.navbar-nav.ms-auto.mb-2.mb-lg-0.d-flex.gap-2
         li.nav-item
           a.nav-link(href='/contact') Contact
         if (!user)
@@ -15,3 +15,5 @@ nav.navbar.navbar-expand-lg.bg-white.border
         else
           li.nav-item
             button.btn.btn-outline-dark#btn--logout(href='') Logout
+          li.nav-item
+            a.btn.nav-link.text-dark(href="#")= "@"+user.username

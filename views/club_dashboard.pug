@@ -2,13 +2,14 @@ extends base
 
 block content
     .container.mt-4.p-2
-        .d-flex.justify-content-between.fs-5
-            p.mb-0 All Tasks 
-            a(href="#") My Subtasks &rarr;
-        .d-flex.justify-content-between.align-items-center
-            p.fw-bold.h1 Dashboard
-            a.p0.btn.btn-secondary.d-flex.align-middle(href=`/dashboard/${user.club}/new`) New Task 
-                i.mb-0.w3.h3.ph-plus-circle
+        .d-flex.justify-content-between
+            .d-flex.justify-content-between.flex-column.fs-5
+                p.mb-0 All Tasks 
+                p.fw-bold.h1 Dashboard
+            .d-flex.justify-content-between.align-items-center.flex-column
+                a.btn.btn-dark(href="#") My Subtasks &rarr;
+                a.p0.btn.btn-secondary.d-flex.align-middle(href=`/dashboard/${user.club}/new`) New Task 
+                    i.mb-0.w3.h3.ph-plus-circle
         .container
             - for (let task of tasks)
                 include includes/task

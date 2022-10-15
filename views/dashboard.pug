@@ -2,9 +2,10 @@ extends base
 
 block content
     .container.mt-4.p-2
-        .d-flex.justify-content-between.fs-5
-            p.mb-0 Your Subtasks 
-            a(href=`/dashboard/${user.club}`) All tasks &rarr;
-        p.fw-bold.h1 Dashboard
+        .d-flex.justify-content-between.align-items-start
+            .d-flex.justify-content-between.flex-column.fs-5
+                p.mb-0 Your Subtasks 
+                p.fw-bold.h1 Dashboard
+            a.btn.btn-dark(href=`/dashboard/${user.club}`) All tasks &rarr;
         - for (let subtask of subtasks)
             include includes/subtask
