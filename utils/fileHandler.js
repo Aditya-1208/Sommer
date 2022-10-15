@@ -39,6 +39,14 @@ module.exports = class fileHandler {
             console.log(err);
         }
     };
+    getFile = async function (fileId) {
+        try {
+            const response = await this.service.files.get({ fileId });
+            return response;
+        } catch (err) {
+            console.log(err);
+        }
+    }
     printAllFiles = async function () {
         try {
             const response = await this.service.files.list();
@@ -106,6 +114,8 @@ module.exports = class fileHandler {
             const file = await this.service.files.get({
                 fileId,
                 alt: 'media'
+            }, {
+                responseType: 'stream'
             })
             return file;
         } catch (err) {

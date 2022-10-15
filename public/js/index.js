@@ -4,6 +4,7 @@ import { login, logout } from "./login.js";
 import { createNewTask } from './task.js';
 import { deleteByParam } from './delete';
 import { assignment } from "./assignment"
+import { uploadFile } from "./file"
 import { alert } from "./alert.js";
 
 const loginForm = document.querySelector("#form--login");

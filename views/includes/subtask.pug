@@ -26,7 +26,8 @@
     var strTime = `${hours}:${minutes}${ampm} ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
     return strTime;
     }
-.container.border.bg-white.mt-4.p-4
+- const fileUrl = `/dashboard/${user.club}/${subtask.task}/${subtask.slug}/file`;
+.container.bg-white.mt-4.p-4.shadow
     .d-flex.justify-content-between.align-items-center
         p.h3= subtask.title
         if (user.role==='lead' || user.role==='coordinator')
@@ -49,9 +50,17 @@
             b Assignee :
             = ` ${subtask.asignee || 'None'}`
     hr.mt-0
-    .d-flex
-        p.fw-bold File : #[a(href="#") #{subtask.slug} &darr;]
-    .d-flex.gap-2
+    .d-flex.justify-content-between.align-items.center.flex-column.flex-sm-row
+        if (subtask.file)
+            p.fw-bold File : #[button.btn.btn-outline-primary(onclick=`downloadFile(event,"${fileUrl}")`) Download &darr;]
+        else 
+            p No File Found
+        form(onsubmit=`uploadFile(event)` data-url=fileUrl)
+            //- .form-label(for = `file-${subtask.slug}`) upload new file 
+            .d-flex
+                input.form-control(id=`file-${subtask.slug}` type="file" name="subtask_file")
+                button.btn.btn-outline-primary(type="submit" class=`${subtask.asignee!==user.username?"disabled":""}`) upload
+
     .d-flex.gap-2.mt-2
         if (!subtask.asignee)
             button.btn.btn-secondary.col-6(onclick=`assignment(\"/dashboard/${user.club}/${subtask.task}/${subtask.slug}/assign\",${"true"})`) Assign me
